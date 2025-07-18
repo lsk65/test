@@ -1,0 +1,5 @@
+Junk1
+
+# display only pertinent lines of a file:
+alias ftgrep='grep -Ev "^\s*#|^$"'
+
