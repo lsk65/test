@@ -16,3 +16,5 @@ awk -F'\\s+|;' '/TMOUT=[0-9]+/ {for (i=1; i<=NF; i++) if ($i ~ /^TMOUT=/) print 
 
 awk -F'[ =;]' '/TMOUT=[0-9]+/ {for (i=1; i<=NF; i++) if ($i=="TMOUT") print $(i+1)}' file
 
+awk -F'[:,;]' '/readonly TMOUT=[0-9]+/ {split($2, a, "="); print a[2]}' file
+
