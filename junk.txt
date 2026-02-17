@@ -2,7 +2,10 @@
 
 
 
-awk -F'[ =;]' '/key=/ {for (i=1; i<=NF; i++) if ($i=="key") print $(i+1)}' data.txt
+awk -F'[ =;]' '/key=/ {for (i=1; i<=NF; i++) if ($i=="key") print $(i+1)}' file
 
-awk -F'[ =;]' '/key=[^;]*/ {for (i=1; i<=NF; i++) if ($i=="key") print $(i+1)}' filename
+awk -F'[ =;]' '/key=[^;]*/ {for (i=1; i<=NF; i++) if ($i=="key") print $(i+1)}' file
+
+awk -F'[ ;]' '/key=[0-9]+;/{split($0, a, "key="); print a[2]}' filename | awk -F';' '{print $1}' file
+
 
