@@ -23,3 +23,10 @@ awk -F'[:,;]' '/TMOUT=[0-9]+/ {split($1, a, "="); print a[2]}' file
 
 awk -F'[:,;]' '/readonly TMOUT=[0-9]+/ {split($2, a, "="); if (a[2] != "900") exit 1; exit 0}' file
 
+if awk -F'[:,;]' '/readonly TMOUT=[0-9]+/ {split($2, a, "="); if (a[2] != "900") exit 1; exit 0}' filename; then 
+    echo "TMOUT is 900"
+else 
+    echo "TMOUT is not 900"
+fi
+
+
