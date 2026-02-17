@@ -38,3 +38,8 @@ else
 fi
 
 
+if awk -F'[ =;]' '/readonly TMOUT=/ {if ($2 != "900") exit 1; exit 0}' file
+
+
+
+
