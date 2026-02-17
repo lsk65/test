@@ -40,6 +40,6 @@ fi
 
 if awk -F'[ =;]' '/readonly TMOUT=/ {if ($2 != "900") exit 1; exit 0}' file
 
-
+if awk -F'[ =;]' '/readonly TMOUT=/ {split($3, a, "="); if (a[2] != "900") exit 1} END {if (NR == 0) exit 1}'; then
 
 
