@@ -21,3 +21,5 @@ awk -F'[:,;]' '/readonly TMOUT=[0-9]+/ {split($2, a, "="); print a[2]}' file
 # finally worked ! TMOUT=900 and printed the 900 !
 awk -F'[:,;]' '/TMOUT=[0-9]+/ {split($1, a, "="); print a[2]}' file 
 
+awk -F'[:,;]' '/readonly TMOUT=[0-9]+/ {split($2, a, "="); if (a[2] != "900") exit 1; exit 0}' file
+
