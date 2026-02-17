@@ -30,3 +30,11 @@ else
 fi
 
 
+
+if awk -F'[:,;]' '/readonly TMOUT=[0-9]+/{split($2,a,"="); exit (a[2] != "900")} filename; then 
+    echo "TMOUT is 900"; 
+else 
+    echo "TMOUT is not 900"; 
+fi
+
+
