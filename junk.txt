@@ -1,0 +1,5 @@
+
+
+
+
+awk -F'[ =;]' '/key=/ {for (i=1; i<=NF; i++) if ($i=="key") print $(i+1)}' data.txt
