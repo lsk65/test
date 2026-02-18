@@ -1,4 +1,7 @@
 
+
+VALUE=$(sed -n 's/^TMOUT=\(.*\)$/\1/p' bashrc) && [ "$VALUE" != "900" ] && echo "TMOUT ($VALUE) is NOT equal to 900" || echo "TMOUT is 900 or not found"
+
 VALUE=$(sed -n '/^[[:space:]]*#/!s/.*TMOUT=\([0-9]*\).*/\1/p' bashrc); [ "$VALUE" != "900" ]
 
 [ -n "${TMOUT+x}" ] && readonly TMOUT || readonly TMOUT=900; export TMOUT
