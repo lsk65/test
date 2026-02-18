@@ -29,17 +29,25 @@ else
     echo "TMOUT is not 900"
 fi
 
-
-
 if awk -F'[:,;]' '/readonly TMOUT=[0-9]+/{split($2,a,"="); exit (a[2] != "900")} filename; then 
     echo "TMOUT is 900"; 
 else 
     echo "TMOUT is not 900"; 
 fi
 
-
 if awk -F'[ =;]' '/readonly TMOUT=/ {if ($2 != "900") exit 1; exit 0}' file
 
 if awk -F'[ =;]' '/readonly TMOUT=/ {split($3, a, "="); if (a[2] != "900") exit 1} END {if (NR == 0) exit 1}'; then
+
+
+# THIS WORKS!
+#
+if awk -v key="TMOUT" 'BEGIN { rc = 1 }; { if \
+(match($0, "(^|[[:space:][:punct:]])" key "[[:space:]]*=[[:space:]]*\"?([0-9]+)\"?", m)) \
+{ if (m[2] != 900) { rc = 0; exit rc } else { rc = 1; exit rc }}} END { exit rc }' "${f}"; then
+   echo -e "ailed 5.6.3" | tee -a $CISLOG
+fi
+#
+#
 
 
