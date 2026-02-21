@@ -5,6 +5,8 @@ perl -ne 'next if /^\s*#/; exit 1 if /^\s*LogLevel\s+(?!INFO|VERBOSE)(\S+)/i'
 
 perl -ne 'next if /^\s*#/; while (/\bLogLevel\s+([^\s#]+)/gi){ $v=$1; unless($v=~/^(?:INFO|VERBOSE)$/i){ exit 1 } $found=1 }'
 
+perl -ne 'next if /^\s*#/; while(/\bLogLevel\s+([^\s#]+)/gi){ $last=$1 } END{ exit($last && $last=~/^(?:INFO|VERBOSE)$/i ? 0 : 1) }'
+
 
 
 VALUE=$(sed -n 's/^TMOUT=\(.*\)$/\1/p' bashrc) && [ "$VALUE" != "900" ] && echo "TMOUT ($VALUE) is NOT equal to 900" || echo "TMOUT is 900 or not found"
