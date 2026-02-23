@@ -17,6 +17,14 @@ perl -ne 'next if /^\s*#/; while (/\bLogLevel\s*=\s*([^\s#]+)/gi) { $last=$1 } E
 Now the above, except i need the first key value found
 perl -ne 'next if /^\s*#/; if (!$found){ if (/\bKEY\s*=\s*([^\s#]+)/){ $val=$1; $found=1 } } END{ exit($found && $val =~ /^(?:pattern1|pattern2)$/ ? 0 : 1) }' file
 
+perl -ne 'next if /^\s*#/; if (!$found){ if (/\bKEY\s*=\s*([^\s#]+)/){ $val=$1; $found=1 } } END{ exit($found && $val =~ /^(?:pattern1|pattern2)$/ ? 0 : 1) }' file
+
+Use this variant to allow a variable number of spaces around the equals sign (already supported by \s*). Replace KEY, pattern1, pattern2, and file as needed.
+
+perl -ne 'next if /^\s*#/; if (!$found){ if (/\bKEY\s+([^\s#]+)/){ $val=$1; $found=1 } } END{ exit($found && $val =~ /^(?:pattern1|pattern2)$/ ? 0 : 1) }' file
+
+Replace KEY, pattern1, pattern2, and file as needed. This matches uncommented lines, finds the first occurrence of "KEYvalue" (one or more spaces), and exits 0 if that value equals pattern1 or pattern2 (case-sensitive), else exits 1
+
 
 VALUE=$(sed -n 's/^TMOUT=\(.*\)$/\1/p' bashrc) && [ "$VALUE" != "900" ] && echo "TMOUT ($VALUE) is NOT equal to 900" || echo "TMOUT is 900 or not found"
 
