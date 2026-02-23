@@ -1,6 +1,6 @@
 
 
-
+perl -ne 'push @L,$_; END{ for($i=$#L;$i>=0;$i--){ next if $L[$i]=~/^\s*#/; if($L[$i]=~/^\s*(?i:shorthost)\s+(\S+)\s*$/){ exit(($1 eq "yes"||$1 eq "no")?0:1) } } exit 1 }'
 
 
 perl -0777 -ne 'END{ exit 1 } continue { } BEGIN{ }' \
