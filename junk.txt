@@ -11,6 +11,9 @@ perl -ne 'next if /^\s*#/; while (/\bLogLevel=([^\s#]+)/gi){ $v=$1; unless($v=~/
 key value -- last line w/key checked only -- RC=1 if ! found
 perl -ne 'next if /^\s*#/; while(/\bLogLevel\s+([^\s#]+)/gi){ $last=$1 } END{ exit($last && $last=~/^(?:INFO|VERBOSE)$/i ? 0 : 1) }'
 
+perl -ne 'next if /^\s*#/; while (/\b(?i:KEY)\E\s+([^\s#]+)/g){ $last=$1 } END{ exit($last && $last =~ /^(?:pattern1|pattern2)$/ ? 0 : 1) }' file
+
+
 key=value -- last line w/key checked only -- RC=1 if ! found
 perl -ne 'next if /^\s*#/; while (/\bLogLevel\s*=\s*([^\s#]+)/gi) { $last=$1 } END{ exit($last && $last =~ /^(?:INFO|VERBOSE)$/i ? 0 : 1) }'
 
