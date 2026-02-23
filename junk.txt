@@ -1,6 +1,8 @@
 
 
 
+
+
 perl -0777 -ne 'END{ exit 1 } continue { } BEGIN{ }' \
 -e 'my @lines = grep { $_ !~ /^\s*#/ } split /\n/; for(my $i=$#lines;$i>=0;$i--){ if($lines[$i] =~ /^\s*(?i:shorthost)\s+([^\s]+)\s*$/){ exit (($1 eq "yes" or $1 eq "no")?0:1) } } exit 1'
 
