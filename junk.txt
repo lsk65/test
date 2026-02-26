@@ -1,4 +1,8 @@
 
+# the below is for the testing of variables in place of direct input!
+KEY='MyKey'; VALS='VAR1|VAR2'
+perl -ne 'next if/^\s*(?:#|;|$)/; $l||=$_ if /^\s*(?i:'"$KEY"')\s*(?:=\s*|\s+)\S/; END{exit($l=~/^\s*(?i:'"$KEY"')\s*(?:=\s*|\s+)(?:\x22(?:'"$VALS"')\x22|\x27(?:'"$VALS"')\x27|(?:'"$VALS"'))\s*(?:[#;].*)?$/?0:1)}' file
+
 
 
 perl -nE 'BEGIN{$found=undef} next if /^\s*#/; if (/\bShortHost\s+(\S+)/i){ $found=$1 } END { exit(defined $found && ($found eq "yes" || $found eq "no") ? 0 : 1) }' FILE
