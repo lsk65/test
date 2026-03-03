@@ -1,4 +1,27 @@
 
+
+
+output=$(adnf install -y package-name 2>&1)
+rc=$?
+if [ $rc -ne 0 ]; then
+  if echo "$output" | grep -qiE 'GPG key|public key|signature|No key|key import failed'; then
+    echo "GPG key verification error"
+    exit 1
+  elif echo "$output" | grep -qiE 'rpmdb|RPMDB|DB corrupted|cannot open package database|Transaction check error'; then
+    echo "rpmdb error"
+    exit 2
+  else
+    echo "other adnf error"
+    exit $rc
+  fi
+fi
+echo "success"
+
+
+
+
+
+
 # the below is for the testing of variables in place of direct input!
 KEY='MyKey'; VALS='VAR1|VAR2'
 perl -ne 'next if/^\s*(?:#|;|$)/; $l||=$_ if /^\s*(?i:'"$KEY"')\s*(?:=\s*|\s+)\S/; END{exit($l=~/^\s*(?i:'"$KEY"')\s*(?:=\s*|\s+)(?:\x22(?:'"$VALS"')\x22|\x27(?:'"$VALS"')\x27|(?:'"$VALS"'))\s*(?:[#;].*)?$/?0:1)}' file
