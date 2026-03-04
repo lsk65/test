@@ -1,5 +1,42 @@
 
+....................................................................................
+Remove an active systemd service on RHEL 9:
+===========================================
 
+Stop the service immediately:
+sudo systemctl stop <service>.service
+
+Disable the service so it won’t start at boot:
+sudo systemctl disable --now <service>.service
+
+(If you already ran stop, disable --now combines disabling and stopping.)
+
+Mask the service to prevent any activation (optional, for extra safety):
+sudo systemctl mask <service>.service
+
+Verify status and that it’s disabled/masked:
+systemctl status <service>.service
+systemctl is-enabled <service>.service   # expects "disabled" or "masked"
+
+Remove the unit file(s):
+If unit is provided by an installed package, remove the package:
+sudo dnf remove <package-name>
+
+If unit file is a custom file (usually /etc/systemd/system/ or /usr/lib/systemd/system/), delete it:
+sudo rm /etc/systemd/system/<service>.service
+(or from /usr/lib/systemd/system/ for vendor units; prefer package removal for vendor units)
+
+Reload systemd manager configuration:
+sudo systemctl daemon-reload
+
+(Optional) If you removed a package, also clean leftover unit symlinks and run:
+sudo systemctl reset-failed
+
+Notes:
+Use systemctl list-unit-files | grep <service> to find unit locations and enabled state.
+Prefer removing the package that installed the unit when possible to avoid leaving orphaned files.
+
+....................................................................................
 
 output=$(adnf install -y package-name 2>&1)
 rc=$?
@@ -17,12 +54,10 @@ if [ $rc -ne 0 ]; then
 fi
 echo "success"
 
-
-
-
-
+....................................................................................
 
 # the below is for the testing of variables in place of direct input!
+
 KEY='MyKey'; VALS='VAR1|VAR2'
 perl -ne 'next if/^\s*(?:#|;|$)/; $l||=$_ if /^\s*(?i:'"$KEY"')\s*(?:=\s*|\s+)\S/; END{exit($l=~/^\s*(?i:'"$KEY"')\s*(?:=\s*|\s+)(?:\x22(?:'"$VALS"')\x22|\x27(?:'"$VALS"')\x27|(?:'"$VALS"'))\s*(?:[#;].*)?$/?0:1)}' file
 
